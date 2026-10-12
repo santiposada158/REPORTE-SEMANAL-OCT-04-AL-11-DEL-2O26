@@ -1,0 +1,511 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Casa Kiwi · Semana 05–11 oct 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800;900&family=Public+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+/* Layout: informe de una columna, bloques por tema, gráfica primero y lectura debajo. Un solo look claro (fondo blanco, negro/naranja/amarillo) por preferencia del equipo. */
+:root{
+  --bg:#ffffff; --ink:#141210; --muted:#5f5850; --line:#e8e3dc; --soft:#faf7f2;
+  --orange:#ec5a1c; --orange-soft:#fff0e7; --yellow:#f6be1f; --yellow-soft:#fff7d9;
+  --good:#1d7a4c; --warn:#b26a00; --bad:#b4271a;
+  --f-display:'Archivo','Arial Narrow',Arial,sans-serif;
+  --f-body:'Public Sans',system-ui,-apple-system,Arial,sans-serif;
+  --f-mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:15px/1.6 var(--f-body);margin:0}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px;padding-block:0 64px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;letter-spacing:-.01em}
+.num,.kpi b,td.n{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+
+/* Portada */
+.cover{background:var(--ink);color:#fff;padding:40px 20px 34px;margin:0 -20px}
+.cover-in{max-width:1040px;margin:0 auto}
+.tag{display:inline-block;font:700 12px var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink);background:var(--yellow);padding:6px 10px;border-radius:3px}
+.cover h1{font-size:clamp(34px,6vw,64px);font-weight:900;line-height:1;margin:18px 0 14px}
+.cover h1 em{font-style:normal;color:var(--orange)}
+.lede{max-width:760px;font-size:17px;color:#e9e4dd;margin:0}
+.lede b{color:#fff}
+.meta{font:500 12px var(--f-mono);color:#a59e95;margin-top:18px}
+
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin:28px 0 8px}
+.kpi{background:var(--bg);padding:16px 16px 14px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.kpi small{font:700 11px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.kpi b{font-size:clamp(20px,2.6vw,28px);font-weight:700;line-height:1.15}
+.kpi span{font-size:12.5px;color:var(--muted)}
+.kpi.hot b{color:var(--orange)}
+.up{color:var(--good);font-weight:700}.down{color:var(--bad);font-weight:700}
+
+section{padding-top:40px;margin-top:40px;border-top:3px solid var(--ink)}
+.sh{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:6px}
+.sh h2{font-size:clamp(24px,3.4vw,32px);font-weight:800}
+.sh .chip{font:700 11px var(--f-mono);text-transform:uppercase;letter-spacing:.08em;padding:4px 8px;border-radius:3px}
+.chip.g{background:#e3f3ea;color:var(--good)}.chip.w{background:var(--yellow-soft);color:var(--warn)}.chip.r{background:#fbe7e4;color:var(--bad)}
+.intro{color:var(--muted);max-width:720px;margin:0 0 18px}
+.grid2{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:28px;align-items:start}
+.grid2 > *{min-width:0}
+.chart{position:relative;height:300px}
+.chart.sm{height:240px}
+.read{display:flex;flex-direction:column;gap:12px}
+.read p{margin:0}
+.stat-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:18px 0 4px}
+.stat{border-left:4px solid var(--yellow);padding:4px 0 4px 12px;min-width:0}
+.stat:nth-child(2){border-color:var(--orange)}.stat:nth-child(3){border-color:var(--ink)}
+.stat b{display:block;font:700 22px var(--f-mono)}
+.stat span{font-size:12.5px;color:var(--muted)}
+.def{font-size:13px;background:var(--soft);border-radius:4px;padding:10px 12px;color:var(--muted)}
+.def b{color:var(--ink)}
+.do{background:var(--yellow-soft);border:1px solid #f0d77e;border-radius:4px;padding:14px 16px}
+.do strong{display:block;font:700 11px var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--warn);margin-bottom:4px}
+.do p{margin:0}
+.alert{background:var(--orange-soft);border-left:4px solid var(--orange);padding:12px 14px;border-radius:0 4px 4px 0;font-size:14px}
+.tw{overflow-x:auto;margin-top:14px}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:420px}
+th{font:700 11px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;text-align:left;color:var(--muted);border-bottom:2px solid var(--ink);padding:8px 10px}
+td{padding:8px 10px;border-bottom:1px solid var(--line)}
+td.n,th.n{text-align:right}
+.bars{display:flex;flex-direction:column;gap:10px;margin-top:6px}
+.bar{display:grid;grid-template-columns:120px minmax(0,1fr) 70px;gap:10px;align-items:center;font-size:13.5px}
+.bar .track{height:14px;background:var(--soft);border-radius:2px;overflow:hidden}
+.bar .fill{height:100%;background:var(--orange)}
+.bar .fill.y{background:var(--yellow)}.bar .fill.k{background:var(--ink)}
+.bar .v{font-family:var(--f-mono);text-align:right}
+.actions{counter-reset:a;display:flex;flex-direction:column;gap:0}
+.act{display:grid;grid-template-columns:44px minmax(0,1fr) 150px;gap:14px;padding:16px 0;border-bottom:1px solid var(--line);align-items:start}
+.act:before{counter-increment:a;content:counter(a);font:900 30px/1 var(--f-display);color:var(--orange)}
+.act h3{font-size:17px;margin-bottom:4px}
+.act p{margin:0;color:var(--muted);font-size:14px}
+.act .who{font:700 11px var(--f-mono);text-transform:uppercase;letter-spacing:.06em;color:var(--ink);background:var(--soft);padding:6px 8px;border-radius:3px;text-align:center}
+.pend{border:1px dashed #c9c1b6;border-radius:4px;padding:12px 14px;font-size:13.5px;color:var(--muted)}
+footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--line);font:500 12px var(--f-mono);color:var(--muted)}
+
+.pig-wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:28px;align-items:center}
+.pig-wrap > *{min-width:0}
+.pig svg{width:100%;max-width:440px;height:auto;display:block;margin:0 auto}
+.legend-pig{display:flex;flex-direction:column;gap:10px;margin-top:4px}
+.legend-pig div{display:grid;grid-template-columns:14px minmax(0,1fr) auto;gap:10px;align-items:baseline;font-size:14.5px}
+.legend-pig i{width:14px;height:14px;border-radius:3px;display:inline-block;transform:translateY(2px)}
+.legend-pig b{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.pig-total{font:900 clamp(30px,5vw,46px)/1 var(--f-display);color:var(--orange);margin:4px 0 2px}
+@media (max-width:820px){.pig-wrap{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:820px){
+  .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .grid2{grid-template-columns:minmax(0,1fr)}
+  .stat-row{grid-template-columns:minmax(0,1fr)}
+  .act{grid-template-columns:34px minmax(0,1fr)}
+  .act .who{grid-column:2;justify-self:start}
+  .bar{grid-template-columns:96px minmax(0,1fr) 62px}
+  .chart{height:260px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div class="wrap">
+<header class="cover">
+ <div class="cover-in">
+  <span class="tag">Reporte semanal · Lun 05 – Dom 11 oct 2026</span>
+  <h1>La semana más llena del año: <em>82 %</em> de ocupación.</h1>
+  <p class="lede">Se vendieron <b>281 noches de 343</b> disponibles. De jueves a domingo el hostal estuvo prácticamente lleno (46–47 de 49 unidades) y la tarifa promedio subió con la demanda. El resultado estimado de la semana es <b>positivo, cerca de $6,2 millones</b>. Octubre va en 525 noches, el 79 % de la meta de 43 %. Faltan 142 noches en las próximas tres semanas, sobre todo en privadas.</p>
+  <div class="meta">Casa Kiwi Hostal · El Poblado, Medellín · Fuente: Lobby PMS (consulta 12-oct) y exportes del 12-oct · 49 unidades en venta</div>
+ </div>
+</header>
+
+<div class="kpis">
+ <div class="kpi hot"><small>Ocupación</small><b>81,9 %</b><span>281 / 343 noches · semana anterior 48,1 % <span class="up">+34 pts</span></span></div>
+ <div class="kpi"><small>Tarifa promedio (ADR)</small><b>$90.769</b><span>Sem. anterior $77.706 <span class="up">+17 %</span></span></div>
+ <div class="kpi"><small>RevPAR</small><b>$74.362</b><span>Ingreso de alojamiento por unidad disponible</span></div>
+ <div class="kpi hot"><small>Resultado estimado</small><b>+$6,20 M</b><span>Equilibrio: ~208 noches; se hicieron 281</span></div>
+ <div class="kpi"><small>Ventas PMS</small><b>$29,78 M</b><span>Alojamiento $25,51 M · bar $3,96 M · extras $0,31 M</span></div>
+ <div class="kpi"><small>Recaudo de la semana</small><b>$28,62 M</b><span>601 pagos · 54 % con tarjeta de crédito</span></div>
+ <div class="kpi"><small>Check-ins / check-outs</small><b>113 / 93</b><span>0 llegadas sin presentarse en Lobby</span></div>
+ <div class="kpi hot"><small>Octubre vs meta 43 %</small><b>525 / 667</b><span>79 % de la meta · faltan 142 noches</span></div>
+</div>
+
+<!-- OCUPACIÓN -->
+<section id="ocupacion">
+ <div class="sh"><h2>Ocupación y precio</h2><span class="chip g">Superó el plan</span></div>
+ <p class="intro">El 6 de octubre la semana tenía 40,6 % en libros y el plan era cerrar entre 45 y 52 %. Cerró en 81,9 %. El salto llegó el jueves 8, con el festival Altavoz (10–12 oct), el receso escolar y la Climate Week.</p>
+ <div class="grid2">
+  <div class="chart"><canvas id="cOcc" aria-label="Unidades vendidas por día y tarifa promedio"></canvas></div>
+  <div class="read">
+   <div class="def"><b>Ocupación</b> = noches vendidas ÷ noches disponibles. Se usan 49 unidades: la Privada 44 sí se vendió esta semana y la Cama 1 del Dorm 11 quedó fuera. Con las 50 de Lobby sería 80,3 %.</div>
+   <p>La tarifa promedio (<b>ADR</b>, ingreso de alojamiento ÷ noches vendidas) pasó de $75.652 el lunes a $98.041 el sábado. El precio acompañó la demanda, aunque con 47 de 49 unidades vendidas por tres noches seguidas todavía había margen para subir más.</p>
+   <div class="stat-row" style="grid-template-columns:repeat(2,minmax(0,1fr))">
+    <div class="stat"><b>83 %</b><span>Dormitorios · 169 de 203 camas-noche · ADR $44.484</span></div>
+    <div class="stat"><b>80 %</b><span>Privadas · 112 de 140 noches · ADR $129.174</span></div>
+   </div>
+  </div>
+ </div>
+ <div class="stat-row">
+  <div class="stat"><b>281 vs 165</b><span>Noches vs semana anterior (28 sep–4 oct): +70 %</span></div>
+  <div class="stat"><b>281 vs 66</b><span>Noches vs misma semana de 2025: más de 4 veces</span></div>
+  <div class="stat"><b>40,9 %</b><span>Ocupación de septiembre completo, como referencia</span></div>
+ </div>
+ <div class="do"><strong>Decisión</strong><p>Cuando un fin de semana llegue a 85 % con tres días de anticipación, subir la tarifa de dormitorio y privada un escalón (de normal a máxima) en todos los canales. Esta semana se llenó con tarifa normal.</p></div>
+</section>
+
+<!-- CANALES -->
+<section id="canales">
+ <div class="sh"><h2>De dónde vino la ocupación</h2><span class="chip w">Hostelworld domina</span></div>
+ <p class="intro">Noches de la semana por canal y lo que deja cada noche después de comisiones. Hostelworld cobra su comisión aparte (se suma a la tarifa de Lobby), así que el valor de Lobby ya es neto. A Booking (18 %) y Expedia (26 %) se les resta.</p>
+ <div class="grid2">
+  <div class="chart"><canvas id="cCh" aria-label="Noches y neto por noche por canal"></canvas></div>
+  <div class="read">
+   <p><b>Hostelworld</b> puso 149 de las 281 noches (53 %), casi todas en dormitorio, con un neto de $60.941 por noche.</p>
+   <p><b>Booking</b> puso 80 noches y deja $99.778 netos por noche porque vende sobre todo privadas.</p>
+   <p><b>Directo</b> (Recepción + Santiago Posada): 49 noches, $55.800 por noche en promedio, sin comisión.</p>
+   <div class="def"><b>Extensión</b>: huésped que llegó por una OTA y se queda más días con una reserva directa. Esta semana hubo <b>8 extensiones</b>, 21 noches y $870.856 sin comisión. Dos de ellas se cobraron a $31.080 por noche, igual a la tarifa neta de Hostelworld y por debajo del ADR de dormitorio ($44.484).</p></div>
+  </div>
+ </div>
+ <h3 style="font-size:18px;margin-top:26px">Reservas creadas en la semana: 125</h3>
+ <div class="grid2" style="margin-top:10px">
+  <div class="bars" id="createdBars"></div>
+  <div class="read">
+   <p>109 de las 125 son para octubre: se reserva sobre la fecha. La mitad se hizo con 1 día o menos de anticipación y el 74 % con 3 días o menos. Miércoles y jueves concentraron 59 reservas nuevas.</p>
+   <p>Booking generó más valor ($9,99 M) con menos reservas (38) que Hostelworld (58 reservas, $6,88 M).</p>
+  </div>
+ </div>
+ <div class="do" style="margin-top:18px"><strong>Decisión</strong><p>Definir una tarifa mínima de extensión directa: la tarifa normal de Lobby menos 10 %, nunca la neta de Hostelworld. Así se protege el margen sin perder la extensión.</p></div>
+</section>
+
+<!-- RECEPCIÓN -->
+<section id="recepcion">
+ <div class="sh"><h2>Movimiento en recepción</h2></div>
+ <p class="intro">Según Lobby, las 113 llegadas de la semana hicieron check-in: ninguna quedó pendiente.</p>
+ <div class="grid2">
+  <div class="chart sm"><canvas id="cIO" aria-label="Check-ins y check-outs por día"></canvas></div>
+  <div class="read">
+   <p>El miércoles 7 y el jueves 8 fueron los días de más trabajo: 22 y 21 llegadas y 26 salidas entre los dos días. El jueves entraron 21 y salieron solo 8, por eso la ocupación saltó de 34 a 47.</p>
+  </div>
+ </div>
+</section>
+
+<!-- CAJA -->
+<section id="caja">
+ <div class="sh"><h2>Ventas y recaudo</h2></div>
+ <p class="intro">Las <b>ventas</b> son lo que se cargó a las cuentas en Lobby durante la semana. El <b>recaudo</b> es el dinero que entró: incluye anticipos de estadías futuras ($18,48 M) y pagos de estadías actuales ($10,14 M). Son cifras distintas y no se suman.</p>
+ <div class="grid2">
+  <div class="chart sm"><canvas id="cSales" aria-label="Ventas por categoría"></canvas></div>
+  <div class="chart sm"><canvas id="cPay" aria-label="Recaudo por forma de pago"></canvas></div>
+ </div>
+ <p style="margin-top:14px">Las privadas son el 55 % de las ventas y los dormitorios el 31 %. En el recaudo, crédito y débito suman 85 %. El efectivo ($3,62 M) es el que debe cuadrar todos los días contra caja menor.</p>
+</section>
+
+<!-- BAR -->
+<section id="bar">
+ <div class="sh"><h2>Bar</h2><span class="chip r">Cortesías altas</span></div>
+ <p class="intro">$3.855.000 en ventas registradas, 347 productos vendidos. En Lobby el bar suma $3.958.000: la diferencia de $103.000 debe aparecer en el cierre.</p>
+ <div class="grid2">
+  <div class="chart sm"><canvas id="cBar" aria-label="Ventas del bar por día"></canvas></div>
+  <div class="read">
+   <p>El viernes 9 fue el mejor día ($854.000). La cerveza es el 76 % de la venta: Águila, Pilsen, Poker y Club Colombia suman $2,76 M.</p>
+   <p><b>Margen bruto</b> (venta menos costo del producto) en lo vendido: <b>75 %</b>. Costo de lo vendido: $892.272, más unos $85.500 estimados para 7 productos sin costo en la tabla (cigarrillos, media de tequila, Rosada y Mítica).</p>
+  </div>
+ </div>
+ <div class="stat-row">
+  <div class="stat"><b>111</b><span>Cortesías registradas: 1 de cada 4 bebidas que salieron del bar</span></div>
+  <div class="stat"><b>$301.462</b><span>Costo de las cortesías. A precio de venta equivalen a $1.493.000</span></div>
+  <div class="stat"><b>+$1,37 M</b><span>Resultado del bar en la semana después de cortesías y del fijo del bar ($1,20 M)</span></div>
+ </div>
+ <div class="do"><strong>Decisión</strong><p>Poner un tope de cortesías por turno y registrar el motivo en la descripción (bienvenida, compensación, voluntario, evento). 41 de las 111 fueron Águila y 13 fueron Ron Kiwi; 59 se registraron desde el usuario KIWIROOFTOP.</p></div>
+</section>
+
+<!-- GASTOS Y RESULTADO -->
+<section id="resultado">
+ <div class="sh"><h2>Resultado estimado de la semana</h2><span class="chip g">Por encima del equilibrio</span></div>
+ <p class="intro">Estimación con la regla del equipo: ingreso de alojamiento de las noches de la semana menos comisiones, desayunos, resultado del bar y la parte proporcional (7/31) de los gastos fijos de octubre.</p>
+ <div class="grid2">
+  <div class="chart"><canvas id="cRes" aria-label="Cascada del resultado estimado"></canvas></div>
+  <div class="read">
+   <div class="tw" style="margin-top:0"><table>
+    <tbody>
+     <tr><td>Alojamiento neto de comisiones</td><td class="n">$20.119.526</td></tr>
+     <tr><td>Devolución Privada 32 (Florent)</td><td class="n">−$172.000</td></tr>
+     <tr><td>Desayunos huéspedes (404) y voluntarios (58)</td><td class="n">−$2.963.626</td></tr>
+     <tr><td>Bar: venta − costo − cortesías − fijo bar</td><td class="n">+$1.374.476</td></tr>
+     <tr><td>Cargos extra</td><td class="n">+$308.000</td></tr>
+     <tr><td>Gastos fijos sin bar (7/31 de $54,55 M)</td><td class="n">−$12.318.419</td></tr>
+     <tr><td>Impuestos (7/31)</td><td class="n">−$143.287</td></tr>
+     <tr><td><b>Resultado estimado</b></td><td class="n"><b>+$6.204.670</b></td></tr>
+    </tbody></table></div>
+   <div class="def"><b>Punto de equilibrio</b>: cada noche vendida dejó $61.764 después de comisiones y desayuno. Para cubrir los fijos de la semana hacían falta unas <b>208 noches</b> (60 % de ocupación). Se vendieron 281.</div>
+  </div>
+ </div>
+ <h3 style="font-size:18px;margin-top:28px">Caja menor: $3.274.650 en 27 egresos</h3>
+ <div class="grid2" style="margin-top:10px">
+  <div class="bars" id="expBars"></div>
+  <div class="read">
+   <p>Estos egresos son compras de la operación (desayuno, bar, aseo) y ya están dentro de los fijos y del costo estimado del desayuno. Por eso no se restan otra vez.</p>
+   <div class="alert">Dos egresos necesitan explicación: <b>"Oficina de Caro" por $1.000.000</b> (8 oct), que no tiene proveedor ni factura, y la <b>devolución de $172.000</b> a Florent (Privada 32, 9–10 oct). La reserva sigue en Lobby por $182.714, así que la venta está inflada. También hay $190.000 en cigarrillos comprados contra $55.000 vendidos.</div>
+  </div>
+ </div>
+</section>
+
+<!-- MERCADOS -->
+<section id="mercados">
+ <div class="sh"><h2>Quién llegó</h2></div>
+ <p class="intro">País del titular de las 113 reservas que llegaron en la semana.</p>
+ <div class="grid2">
+  <div class="chart sm"><canvas id="cGeo" aria-label="Llegadas por país"></canvas></div>
+  <div class="read">
+   <p>Alemania (18) y Francia (15) lideran, como en todo 2026 (Francia 367 y Alemania 305 llegadas en el año). Colombia aparece tercera con 13: el receso escolar y el festival trajeron público nacional.</p>
+   <p>Dinamarca (7) y Australia (7) subieron frente a su peso en el año.</p>
+  </div>
+ </div>
+</section>
+
+<!-- OCTUBRE -->
+<section id="octubre">
+ <div class="sh"><h2>Octubre: qué tan cerca está la meta</h2><span class="chip w">Faltan 90 a 142 noches</span></div>
+ <p class="intro">El plan de revenue de octubre (corte 29 de septiembre) proyecta un escenario base de 39–41 % de ocupación: entre 600 y 630 noches y $64–69 M de alojamiento, con meta interna de $67 M. Para cubrir los gastos del mes hacen falta unas 661 noches (42,6 %), por eso se propuso subir la meta a 43 % (667 noches). El plan mide sobre 50 unidades × 31 noches = 1.550.</p>
+ <div class="grid2">
+  <div class="chart"><canvas id="cCum" aria-label="Noches de octubre acumuladas frente a las metas"></canvas></div>
+  <div class="read">
+   <p>Al 12 de octubre hay <b>525 noches</b> de octubre: 391 ya vividas (1–11 oct) y 134 reservadas para el 12–31. Es el <b>33,9 %</b> del mes.</p>
+   <div class="bars" id="goalBars"></div>
+   <div class="def"><b>Ritmo necesario</b>: del 12 al 31 quedan 20 noches. Para llegar a 667 hay que vender 276 noches en ese tramo, unas <b>14 unidades por noche</b> (28 % de ocupación). Ya hay 134, así que faltan 142 reservas-noche por entrar.</div>
+  </div>
+ </div>
+ <div class="stat-row">
+  <div class="stat"><b>~800</b><span>Cierre si el 12–31 vende al ritmo de septiembre (20 unidades por noche): 52 %, la meta se cumple con holgura</span></div>
+  <div class="stat"><b>582</b><span>Cierre si el 12–31 vende como esas mismas fechas de 2025 (191 noches): 37,5 %, debajo del equilibrio</span></div>
+  <div class="stat"><b>$49,4 M</b><span>Ingreso de alojamiento en libros: 74 % de la meta de $67 M. Faltan $17,6 M, entre 150 y 190 noches según la tarifa</span></div>
+ </div>
+ <h3 style="font-size:18px;margin-top:28px">Avance por semana frente al plan</h3>
+ <div class="grid2" style="margin-top:10px">
+  <div class="chart"><canvas id="cPlan" aria-label="Ocupación por semana: plan, 6 de octubre y hoy"></canvas></div>
+  <div class="read">
+   <p>Las dos primeras semanas superaron el plan: 55 % del 1 al 4 y 80 % del 5 al 11. Desde el 6 de octubre entraron 48 noches nuevas para la semana del 12 al 18, pero las semanas siguientes casi no se movieron: 19–25 pasó de 3,7 % a 8,0 % y 26–31 de 6,7 % a 7,0 %.</p>
+   <p><b>Por segmento cambió el problema.</b> El 6 de octubre el punto débil eran los dormitorios. Hoy ya tienen 281 noches y superaron su meta de 233. Las privadas tienen 243 de 384: les faltan 141 noches.</p>
+   <div class="bars" id="segBars"></div>
+  </div>
+ </div>
+ <h3 style="font-size:18px;margin-top:28px">Eventos que quedan en octubre</h3>
+ <div class="tw"><table>
+  <thead><tr><th>Fechas</th><th>Evento</th><th class="n">Vendidas hoy</th><th>Qué hace el mercado</th><th>Lectura</th></tr></thead>
+  <tbody>
+   <tr><td>16–18 oct</td><td>EFFIX</td><td class="n">6 · 5 · 4</td><td>Precios iguales a lo normal; 7 % sin cupo</td><td>No se ve presión. El +15–20 % del plan para privadas no aplica hoy</td></tr>
+   <tr><td>23–25 oct</td><td>Expocar + Diversidad</td><td class="n">3 · 6 · 6</td><td>Precios iguales a lo normal; casi todos con cupo</td><td>Vender con tarifa normal, sin descuento extra</td></tr>
+   <tr><td>29–31 oct</td><td>Travel Expo + AMWC + puente festivo</td><td class="n">3 · 4 · 10</td><td>Privadas +38 % y camas +10 % sobre lo normal; 13 % de privadas sin cupo</td><td>Subir privadas. Tu privada más barata en Hostelworld es $90–124 mil y la mediana está en $192 mil</td></tr>
+  </tbody></table></div>
+ <div class="do" style="margin-top:16px"><strong>Decisión</strong><p>La meta de 43 % sigue al alcance, pero depende de las privadas entre semana y del cierre de mes. Aplicar los cambios de tarifa de la sección siguiente: subir privadas en el puente del 29 oct al 1 nov y en las noches del 13 al 15 que ya se están llenando; bajar solo donde el modelo lo indica (Dorm Iris, dorms de 6 y doble con baño privado en fechas flojas).</p></div>
+</section>
+
+<!-- ALCANCÍA -->
+<section id="alcancia">
+ <div class="sh"><h2>La alcancía de octubre</h2><span class="chip w">Falta $11,9 M</span></div>
+ <p class="intro">Para no perder plata en octubre, el hostal tiene que juntar <b>$57,74 M</b>, lo que suman los gastos fijos del mes. Cada noche vendida mete en la alcancía unos <b>$87.390</b>: lo que queda de la tarifa después de comisiones y desayuno. Son las cifras del plan de octubre, el mismo cálculo del equilibrio de 661 noches.</p>
+ <div class="pig-wrap">
+  <div class="pig">
+   <svg viewBox="0 0 420 330" role="img" aria-label="Alcancía de octubre llena al 79 %">
+    <defs><clipPath id="pigBody"><ellipse cx="200" cy="170" rx="140" ry="100"/></clipPath></defs>
+    <!-- patas -->
+    <rect x="95" y="240" width="34" height="62" rx="10" fill="#141210"/>
+    <rect x="150" y="248" width="34" height="56" rx="10" fill="#141210"/>
+    <rect x="230" y="248" width="34" height="56" rx="10" fill="#141210"/>
+    <rect x="285" y="240" width="34" height="62" rx="10" fill="#141210"/>
+    <!-- cola -->
+    <path d="M62 150 q-30 -10 -24 -34 q6 -18 22 -6" fill="none" stroke="#141210" stroke-width="7" stroke-linecap="round"/>
+    <!-- cuerpo vacío -->
+    <g clip-path="url(#pigBody)">
+     <rect x="0" y="0" width="420" height="330" fill="#faf7f2"/>
+     <rect x="0" y="111.1" width="420" height="40.5" fill="#f6be1f"/>
+     <rect x="0" y="151.7" width="420" height="178.3" fill="#ec5a1c"/>
+     <line x1="0" x2="420" y1="83.9" y2="83.9" stroke="#141210" stroke-width="1.5" stroke-dasharray="5 5"/>
+    </g>
+    <ellipse cx="200" cy="170" rx="140" ry="100" fill="none" stroke="#141210" stroke-width="5"/>
+    <!-- oreja -->
+    <path d="M262 82 l22 -40 l26 48 z" fill="#141210"/>
+    <!-- hocico -->
+    <ellipse cx="346" cy="172" rx="22" ry="28" fill="#fff" stroke="#141210" stroke-width="5"/>
+    <circle cx="342" cy="164" r="4" fill="#141210"/><circle cx="342" cy="181" r="4" fill="#141210"/>
+    <circle cx="300" cy="132" r="7" fill="#fff" stroke="#141210" stroke-width="3"/><circle cx="301" cy="133" r="3" fill="#141210"/>
+    <!-- ranura y moneda -->
+    <rect x="160" y="62" width="70" height="12" rx="6" fill="#141210"/>
+    <circle cx="195" cy="30" r="22" fill="#f6be1f" stroke="#141210" stroke-width="4"/>
+    <text x="195" y="37" text-anchor="middle" font-family="Archivo, Arial, sans-serif" font-weight="900" font-size="20" fill="#141210">$</text>
+    <!-- etiquetas -->
+    <text x="200" y="218.8" text-anchor="middle" font-family="Archivo, Arial, sans-serif" font-weight="800" font-size="22" fill="#fff">59 %</text>
+    <text x="200" y="138.4" text-anchor="middle" font-family="Archivo, Arial, sans-serif" font-weight="800" font-size="18" fill="#141210">+20 %</text>
+    <text x="190" y="104.0" text-anchor="middle" font-family="Archivo, Arial, sans-serif" font-weight="800" font-size="16" fill="#5f5850">falta 21 %</text>
+   </svg>
+  </div>
+  <div class="read">
+   <small style="font:700 11px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">Ya asegurado</small>
+   <div class="pig-total">$45,88 M de $57,74 M</div>
+   <p style="color:var(--muted);margin-top:0">La alcancía va al 79 %.</p>
+   <div class="legend-pig">
+    <div><i style="background:#ec5a1c"></i><span>Noches ya vividas (1–11 oct): 391</span><b>$34,17 M</b></div>
+    <div><i style="background:#f6be1f"></i><span>Noches reservadas (12–31 oct): 134</span><b>$11,71 M</b></div>
+    <div><i style="background:#faf7f2;border:1.5px solid #141210"></i><span>Falta para cubrir los egresos: 136 noches</span><b>$11,86 M</b></div>
+   </div>
+   <div class="def"><b>Cómo leerla:</b> la línea punteada es el escenario base del plan (615 noches); aun llenando hasta ahí faltarían $4 M. Para llenar la alcancía hay que vender 136 noches más del 12 al 31 de octubre, unas 7 por noche además de lo que ya está reservado.</div>
+  </div>
+ </div>
+</section>
+
+<!-- COMPETENCIA -->
+<section id="competencia">
+ <div class="sh"><h2>Competencia en Hostelworld</h2><span class="chip w">Casa Kiwi entre los más baratos</span></div>
+ <p class="intro">Precio más barato disponible cada noche en 24 hostales de Medellín, extraído de Hostelworld el 12 de octubre para las próximas 30 noches. Es el precio que ve el huésped, ya con el descuento que muestra Hostelworld (Casa Kiwi publica −30 % sobre la tarifa de Lobby).</p>
+ <div class="grid2">
+  <div class="chart" style="height:520px"><canvas id="cRank" aria-label="Precio promedio de la cama más barata por hostal"></canvas></div>
+  <div class="read">
+   <div class="stat-row" style="grid-template-columns:minmax(0,1fr);margin-top:0">
+    <div class="stat"><b>$46.445</b><span>Tu cama más barata, promedio 30 noches. Mediana del mercado: $56.555 (<span class="down">−18 %</span>). Puesto 7 de 24, del más barato al más caro</span></div>
+    <div class="stat"><b>$103.307</b><span>Tu privada más barata. Mediana: $132.593 (<span class="down">−22 %</span>). Puesto 5 de 24</span></div>
+    <div class="stat"><b>8,8</b><span>Tu calificación en Hostelworld. La mediana del grupo es 8,7: cobras menos que hostales con nota parecida</span></div>
+   </div>
+   <p>Los hostales más baratos que Casa Kiwi (Hostel43, Rock Hostel, Purple Monkey, Yellow House, Lleras Calle 8, Centro Hostel) tienen en su mayoría peor calificación. Bajar la cama de 8 no te pone por delante de ellos y sí te quita margen.</p>
+  </div>
+ </div>
+ <h3 style="font-size:18px;margin-top:26px">Tu cama frente al mercado, noche a noche</h3>
+ <div class="chart" style="margin-top:8px"><canvas id="cMkt" aria-label="Precio de cama de Casa Kiwi frente a la mediana del mercado"></canvas></div>
+ <p style="font-size:13px;color:var(--muted);margin-top:6px">La franja gris es el rango donde está la mitad de los hostales (del 25 % más barato al 25 % más caro).</p>
+</section>
+
+<!-- TARIFAS -->
+<section id="tarifas">
+ <div class="sh"><h2>Cambios de tarifa sugeridos</h2><span class="chip w">Pendientes de decidir</span></div>
+ <p class="intro">Resultado del modelo de la consola de revenue con los datos del 12 de octubre: combina lo que ya está vendido en Lobby, lo que se vendió las mismas noches de 2025 y los precios de la competencia. Los valores son <b>tarifa de Lobby</b>; Hostelworld muestra 30 % menos. El modelo propone 40 cambios para los próximos 30 días y ninguno está marcado todavía como aceptado o rechazado.</p>
+ <div class="tw"><table>
+  <thead><tr><th>Categoría</th><th>Noches</th><th class="n">Hoy</th><th class="n">Sugerido</th><th class="n">Cambio</th><th>Por qué</th></tr></thead>
+  <tbody>
+   <tr><td colspan="6" style="font:700 11px var(--f-mono);letter-spacing:.08em;color:var(--orange);text-transform:uppercase;padding-top:14px">Subir</td></tr>
+   <tr><td>Doble baño compartido</td><td>13–15 oct</td><td class="n">$154.440</td><td class="n">$174.000–178.000</td><td class="n up">+14 %</td><td>Ya vendida en buena parte y parte de la competencia sin cupo</td></tr>
+   <tr><td>Twin sin vista (Privado 12)</td><td>13–15 oct</td><td class="n">$185.328</td><td class="n">$210.000</td><td class="n up">+13 %</td><td>Competencia sin cupo y demanda alta</td></tr>
+   <tr><td>Triple baño compartido</td><td>13–15 oct</td><td class="n">$279.872</td><td class="n">$310.000–315.000</td><td class="n up">+12 %</td><td>Demanda alta</td></tr>
+   <tr><td>Privadas con baño compartido (doble, 13, twin, triple)</td><td>28 oct–2 nov</td><td class="n">$128.700–309.872</td><td class="n">+9 a +13 %</td><td class="n up">+9–13 %</td><td>Travel Expo, AMWC y puente del 2 de noviembre; mercado más caro de lo normal</td></tr>
+   <tr><td>Familiar baño privado</td><td>31 oct</td><td class="n">$333.309</td><td class="n">$379.000</td><td class="n up">+14 %</td><td>Puente festivo y competencia sin cupo</td></tr>
+   <tr><td>Dorms 6, Dorm 11 y Dorm Iris</td><td>30 oct–1 nov</td><td class="n">$69.350–92.664</td><td class="n">$74.000–103.000</td><td class="n up">+7–11 %</td><td>Puente festivo y demanda prevista alta</td></tr>
+   <tr><td colspan="6" style="font:700 11px var(--f-mono);letter-spacing:.08em;color:var(--orange);text-transform:uppercase;padding-top:14px">Bajar</td></tr>
+   <tr><td>Dorm Iris (femenino)</td><td>12–23 oct</td><td class="n">$92.664</td><td class="n">$79.000–83.000</td><td class="n down">−14 %</td><td>La cama más cara de tus dorms, sin ventas y con el mercado más barato de lo normal</td></tr>
+   <tr><td>Dorms 6 (Verde, Azalea, Amapola)</td><td>13–22 oct</td><td class="n">$77.220</td><td class="n">$70.000–75.000</td><td class="n down">−9 %</td><td>Demanda baja y última hora con cupo</td></tr>
+   <tr><td>Doble baño privado</td><td>16–18 y 23–27 oct</td><td class="n">$173.030–193.030</td><td class="n">$153.000–183.000</td><td class="n down">−10–12 %</td><td>Mercado más barato de lo normal en esas fechas</td></tr>
+   <tr><td>Dorm 11 (8 camas)</td><td>14–18 oct</td><td class="n">$64.350</td><td class="n">$61.000–63.000</td><td class="n down">−8 %</td><td>Ajuste pequeño: ya está entre las camas más baratas del mercado</td></tr>
+  </tbody></table></div>
+ <div class="def" style="margin-top:14px"><b>Diferencias con el plan de octubre.</b> El plan pedía bajar dormitorios entre 12 y 18 % en las fechas flojas. Con los precios de hoy, el modelo baja menos (5 a 14 %) porque la cama de 8 ya está entre el 25 % más barato del mercado y bajar más no suele traer reservas. El plan también pedía subir privadas 15–20 % para EFFIX (16–18 oct), pero la competencia no muestra presión esas noches.</div>
+ <div class="do" style="margin-top:14px"><strong>Decisión</strong><p>Aplicar hoy las subidas del 13 al 15 de octubre, que son para mañana y pasado, y las del puente del 29 oct al 1 nov antes de que entren reservas a la tarifa actual. Registrar en la consola cuáles se aceptan, para medir el efecto en el próximo reporte.</p></div>
+</section>
+
+<!-- CONTEXTO -->
+<section id="contexto">
+ <div class="sh"><h2>Contexto de la semana</h2></div>
+ <div class="grid2">
+  <div class="read">
+   <p><b>Eventos:</b> receso escolar, cierre de la Climate Week (hasta el 10 de octubre), Festival Altavoz (10–12 de octubre) y puente festivo del lunes 12. El puente explica por qué el domingo 11 siguió lleno (46 unidades), cuando un domingo normal baja.</p>
+   <p><b>Voluntarios:</b> la semana empezó con 9 y terminó con 7 (Roble 4, Bamboo 3). Juan Diego salió el 9 y Sara el 10. Fueron 58 noches de voluntario, es decir 58 desayunos ($371.896). Próximos movimientos: Aiden sale el 16, Charles el 18, Fabián el 23 y Elena el 25. Llegan Jose (pre-registro, aseo) el 16 y Yanil (pre-registro) el 31. Pablo y Dulce siguen sin fecha de salida.</p>
+   <p><b>Upgrades gratis:</b> en Lobby hay al menos 6 reservas con nota de upgrade sin costo (a dorm de 6, a cuarto de chicas, a privada con baño) porque el inventario estaba lleno.</p>
+  </div>
+  <div class="pend"><b>Para completar con el equipo:</b> ¿hubo grupos o reservas corporativas? ¿se cambió alguna tarifa o se activó alguna promoción en la semana? ¿novedades de personal, habitaciones o sistemas? ¿qué pasó con la reserva de Florent (Privada 32) que se devolvió en efectivo?</div>
+ </div>
+</section>
+
+<!-- PENDIENTES -->
+<section id="pendientes">
+ <h3 style="font-size:16px">Lo que no se pudo medir</h3>
+ <div class="pend" style="margin-top:8px"><b>Cancelaciones con causa:</b> la conexión con Lobby no muestra las reservas canceladas y el exporte tampoco las trae. Hace falta el reporte de cancelaciones de Lobby. <b>Upselling:</b> no hay datos de upsell para esta semana.</div>
+</section>
+
+<footer>Casa Kiwi Hostal · Reporte semanal 05–11 oct 2026 · Corte 12/10/2026 · Uso interno</footer>
+</div>
+
+<script>
+(function(){
+const K='#141210',O='#ec5a1c',Y='#f6be1f',M='#5f5850',L='#e8e3dc';
+const days=['Lun 5','Mar 6','Mié 7','Jue 8','Vie 9','Sáb 10','Dom 11'];
+const fmt=n=>'$'+Math.round(n).toLocaleString('es-CO');
+const fmtM=n=>'$'+(n/1e6).toLocaleString('es-CO',{maximumFractionDigits:1})+' M';
+
+// barras HTML
+function bars(id,rows,max,fmtv){
+  const el=document.getElementById(id); if(!el) return;
+  el.innerHTML=rows.map(r=>`<div class="bar"><span>${r[0]}</span><div class="track"><div class="fill ${r[2]||''}" style="width:${(r[1]/max*100).toFixed(1)}%"></div></div><span class="v">${fmtv(r[1])}</span></div>`).join('');
+}
+bars('createdBars',[['Hostelworld',58],['Booking',38,'k'],['Recepción',20,'y'],['S. Posada',7,'y'],['Expedia',1,'k'],['Airbnb',1,'k']],58,v=>v);
+bars('expBars',[['Hotelería',2403175],['Restaurante',570000,'y'],['Bar',301475,'k']],2403175,fmtM);
+
+if(!window.Chart) return;
+Chart.defaults.font.family="'Public Sans',system-ui,sans-serif";
+Chart.defaults.font.size=12; Chart.defaults.color=M;
+Chart.defaults.plugins.legend.labels.boxWidth=12;
+Chart.defaults.maintainAspectRatio=false; Chart.defaults.animation=false;
+const grid={color:L}, nogrid={display:false};
+
+new Chart(cOcc,{data:{labels:days,datasets:[
+ {type:'bar',label:'Unidades vendidas',data:[30,30,34,47,47,47,46],backgroundColor:[Y,Y,Y,O,O,O,O],yAxisID:'y',order:2},
+ {type:'line',label:'Capacidad (49)',data:Array(7).fill(49),borderColor:K,borderDash:[5,4],borderWidth:1.5,pointRadius:0,yAxisID:'y',order:1},
+ {type:'line',label:'ADR',data:[75652,82011,88724,89666,95674,98041,96538],borderColor:K,backgroundColor:K,borderWidth:2.5,pointRadius:4,yAxisID:'y2',order:0}]},
+ options:{plugins:{tooltip:{callbacks:{label:c=>c.dataset.yAxisID==='y2'?'ADR '+fmt(c.raw):c.dataset.label+': '+c.raw}}},
+ scales:{y:{min:0,max:55,grid,title:{display:true,text:'Unidades'}},y2:{position:'right',min:60000,max:110000,grid:nogrid,ticks:{callback:v=>'$'+v/1000+'k'}},x:{grid:nogrid}}}});
+
+new Chart(cCh,{data:{labels:['Hostelworld','Booking','Recepción','S. Posada','Expedia'],datasets:[
+ {type:'bar',label:'Noches en la semana',data:[149,80,38,11,3],backgroundColor:[O,K,Y,Y,K],yAxisID:'y'},
+ {type:'line',label:'Neto por noche',data:[60941,99778,53720,62953,107761],borderColor:M,backgroundColor:M,showLine:false,pointRadius:6,pointStyle:'rectRot',yAxisID:'y2'}]},
+ options:{plugins:{tooltip:{callbacks:{label:c=>c.dataset.yAxisID==='y2'?'Neto/noche '+fmt(c.raw):c.raw+' noches'}}},
+ scales:{y:{min:0,grid,title:{display:true,text:'Noches'}},y2:{position:'right',min:0,max:120000,grid:nogrid,ticks:{callback:v=>'$'+v/1000+'k'}},x:{grid:nogrid}}}});
+
+new Chart(cIO,{type:'bar',data:{labels:days,datasets:[
+ {label:'Check-ins',data:[17,14,22,21,11,14,14],backgroundColor:O},
+ {label:'Check-outs',data:[13,14,18,8,11,14,15],backgroundColor:K}]},
+ options:{scales:{y:{grid,beginAtZero:true},x:{grid:nogrid}}}});
+
+new Chart(cSales,{type:'doughnut',data:{labels:['Privadas','Dormitorios','Bar','Extras'],datasets:[{data:[16297737,9213389,3958000,308000],backgroundColor:[O,Y,K,'#c9c1b6'],borderColor:'#fff',borderWidth:2}]},
+ options:{cutout:'58%',plugins:{title:{display:true,text:'Ventas PMS · $29,78 M',color:K,font:{weight:'700',size:13}},legend:{position:'bottom'},tooltip:{callbacks:{label:c=>c.label+': '+fmt(c.raw)}}}}});
+
+new Chart(cPay,{type:'bar',data:{labels:['Crédito','Débito','Efectivo','Depósito','Transferencia'],datasets:[{data:[15512986,8834363,3624600,475446,176616],backgroundColor:[K,K,O,Y,Y]}]},
+ options:{indexAxis:'y',plugins:{legend:{display:false},title:{display:true,text:'Recaudo por forma de pago · $28,62 M',color:K,font:{weight:'700',size:13}},tooltip:{callbacks:{label:c=>fmt(c.raw)}}},scales:{x:{grid,ticks:{callback:v=>v/1e6+' M'}},y:{grid:nogrid}}}});
+
+new Chart(cBar,{type:'bar',data:{labels:days,datasets:[{label:'Venta bar',data:[216000,499000,541000,515000,854000,661000,569000],backgroundColor:[Y,Y,Y,Y,O,Y,Y]}]},
+ options:{plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>fmt(c.raw)}}},scales:{y:{grid,ticks:{callback:v=>'$'+v/1000+'k'}},x:{grid:nogrid}}}});
+
+// cascada
+const steps=[['Alojamiento neto',20119526],['Devolución',-172000],['Desayunos',-2963626],['Bar',1374476],['Extras',308000],['Fijos',-12318419],['Impuestos',-143287]];
+let acc=0; const fl=[], col=[];
+steps.forEach(([n,v])=>{const a=acc,b=acc+v;fl.push([Math.min(a,b),Math.max(a,b)]);col.push(v>=0?Y:K);acc=b;});
+fl.push([0,acc]);col.push(O);
+new Chart(cRes,{type:'bar',data:{labels:[...steps.map(s=>s[0]),'Resultado'],datasets:[{data:fl,backgroundColor:col}]},
+ options:{plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>{const i=c.dataIndex;return i<steps.length?fmt(steps[i][1]):fmt(acc)}}}},
+ scales:{y:{grid,ticks:{callback:v=>v/1e6+' M'}},x:{grid:nogrid,ticks:{maxRotation:40,autoSkip:false}}}}});
+
+new Chart(cGeo,{type:'bar',data:{labels:['Alemania','Francia','Colombia','EE. UU.','Dinamarca','Reino Unido','Australia','México'],datasets:[{data:[18,15,13,11,7,7,7,4],backgroundColor:[O,O,Y,K,K,K,K,K]}]},
+ options:{indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{grid,beginAtZero:true},y:{grid:nogrid}}}});
+
+
+// metas octubre
+bars('goalBars',[['Base 615',525/615*100],['Equilibrio 661',525/661*100,'k'],['Meta 43 % 667',525/667*100,'y'],['Ingreso $67 M',49.4/67*100,'k']],100,v=>Math.round(v)+' %');
+bars('segBars',[['Dorms 281/233',100],['Privadas 243/384',243/384*100,'y']],100,v=>v>=100?'121 %':Math.round(v)+' %');
+const cum=[23,53,84,110,140,170,204,251,298,345,391,421,440,451,461,467,472,476,479,481,485,489,492,498,504,506,506,508,511,515,525];
+const od=Array.from({length:31},(_,i)=>String(i+1));
+const real=cum.map((v,i)=>i<11?v:null), otb=cum.map((v,i)=>i>=10?v:null);
+const need=od.map((_,i)=>i<10?null:391+(667-391)*(i-10)/20);
+new Chart(cCum,{type:'line',data:{labels:od,datasets:[
+ {label:'Vivido (1–11)',data:real,borderColor:O,backgroundColor:O,borderWidth:3,pointRadius:0},
+ {label:'En libros (12–31)',data:otb,borderColor:O,borderDash:[4,4],borderWidth:2,pointRadius:0},
+ {label:'Ritmo para 43 %',data:need,borderColor:K,borderWidth:1.5,pointRadius:0},
+ {label:'Base 615',data:od.map(()=>615),borderColor:'#c9c1b6',borderWidth:1,pointRadius:0},
+ {label:'Equilibrio 661',data:od.map(()=>661),borderColor:Y,borderWidth:1.5,pointRadius:0}]},
+ options:{plugins:{title:{display:true,text:'Noches de octubre acumuladas',color:K,font:{weight:'700',size:13}}},scales:{y:{min:0,max:700,grid},x:{grid:nogrid,title:{display:true,text:'Día de octubre'}}}}});
+const wk=['1–4','5–11','12–18','19–25','26–31'];
+new Chart(cPlan,{data:{labels:wk,datasets:[
+ {type:'bar',label:'Al 29 sep',data:[12.0,18.6,5.7,2.0,4.0],backgroundColor:'#d8d1c7'},
+ {type:'bar',label:'Al 6 oct',data:[55.0,40.6,10.6,3.7,6.7],backgroundColor:Y},
+ {type:'bar',label:'Hoy 12 oct',data:[55.0,80.3,24.3,8.0,7.0],backgroundColor:O},
+ {type:'line',label:'Plan (punto medio)',data:[27.5,48.5,41,33,44],borderColor:K,backgroundColor:K,showLine:false,pointRadius:6,pointStyle:'rectRot'}]},
+ options:{plugins:{tooltip:{callbacks:{label:c=>c.dataset.label+': '+c.raw+' %'}}},scales:{y:{min:0,max:90,grid,ticks:{callback:v=>v+' %'}},x:{grid:nogrid,title:{display:true,text:'Semana de octubre'}}}}});
+const rk=[["Hostel43",25000],["Rock Hostel",34000],["Purple Monkey",36000],["Yellow House",36000],["Lleras Calle 8",40000],["Centro Hostel",41994],["Casa Kiwi",46445],["Noah Boutique",47067],["Medellin BackPacker",49500],["Yolo Hostel",49524],["Qantic Lodging",51367],["Lucca Hostel",52511],["Metro Floresta",56555],["Galeria de la Montaña",59396],["Rango Boutique",67663],["Black Sheep",68000],["Los Patios",68090],["Masaya",69776],["Medellín Vibes",69795],["Paisa Hostel",74503],["Viajero",78507],["Spring Hostel",89733],["Socialtel Provenza",101530],["Vida Hostel",107600]];
+new Chart(cRank,{type:'bar',data:{labels:rk.map(r=>r[0]),datasets:[{data:rk.map(r=>r[1]),backgroundColor:rk.map(r=>r[0]==='Casa Kiwi'?O:'#d8d1c7')}]},
+ options:{indexAxis:'y',plugins:{legend:{display:false},title:{display:true,text:'Cama más barata · promedio 30 noches',color:K,font:{weight:'700',size:13}},tooltip:{callbacks:{label:c=>fmt(c.raw)}}},scales:{x:{grid,ticks:{callback:v=>'$'+v/1000+'k'}},y:{grid:nogrid,ticks:{autoSkip:false,font:{size:11}}}}}});
+const ml=["12/10", "13/10", "14/10", "15/10", "16/10", "17/10", "18/10", "19/10", "20/10", "21/10", "22/10", "23/10", "24/10", "25/10", "26/10", "27/10", "28/10", "29/10", "30/10", "31/10", "01/11", "02/11", "03/11", "04/11", "05/11", "06/11", "07/11", "08/11", "09/11", "10/11"];
+new Chart(cMkt,{type:'line',data:{labels:ml,datasets:[
+ {label:'25–75 % del mercado',data:[74288, 68240, 70848, 70848, 73852, 76365, 72210, 69795, 69795, 69795, 69795, 70566, 72017, 71900, 70000, 70000, 70000, 73570, 87475, 90762, 75315, 74288, 73372, 73620, 74810, 81960, 80900, 73080, 73080, 73080],borderColor:'transparent',backgroundColor:'#ece7df',fill:'+1',pointRadius:0},
+ {label:'_',data:[37817, 40870, 40870, 40870, 45750, 45750, 40055, 38000, 38000, 38000, 38000, 42000, 42000, 38000, 38000, 38000, 38000, 40500, 45750, 50141, 42288, 48875, 48875, 48875, 48875, 49875, 49500, 47000, 47000, 47000],borderColor:'transparent',pointRadius:0,fill:false},
+ {label:'Mediana del mercado',data:[59240, 57040, 56840, 57040, 59170, 59170, 56782, 56724, 56724, 56724, 56724, 56724, 56724, 56724, 56724, 56724, 56724, 57040, 63000, 68220, 60140, 61936, 58432, 58432, 58432, 59570, 59000, 57375, 56724, 56724],borderColor:K,borderWidth:2,pointRadius:0},
+ {label:'Casa Kiwi',data:[45045, 45045, 45045, 45045, 48545, 48545, 48545, 45045, 45045, 45045, 45045, 48545, 48545, 48545, 45045, 45045, 45045, 45045, 48545, 48545, 48545, 45045, 45045, 45045, 45045, 48545, 48545, 48545, 45045, 45045],borderColor:O,borderWidth:3,pointRadius:0,stepped:true}]},
+ options:{plugins:{legend:{labels:{filter:i=>i.text!=='_'}},tooltip:{callbacks:{label:c=>c.dataset.label==='_'?null:c.dataset.label+': '+fmt(c.raw)}}},scales:{y:{min:20000,grid,ticks:{callback:v=>'$'+v/1000+'k'}},x:{grid:nogrid,ticks:{maxRotation:0,autoSkip:true,maxTicksLimit:10}}}}});
+})();
+</script>
+
+</body></html>
